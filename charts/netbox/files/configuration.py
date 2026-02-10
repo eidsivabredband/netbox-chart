@@ -54,6 +54,7 @@ CORS_ORIGIN_REGEX_WHITELIST = []
 DATABASES = {}
 EMAIL = {}
 REDIS = {}
+PLUGINS = []
 
 _load_yaml()
 
@@ -65,6 +66,11 @@ REDIS["tasks"]["PASSWORD"] = _read_secret(provided_secret_name, "tasks_password"
 REDIS["caching"]["PASSWORD"] = _read_secret(provided_secret_name, "cache_password")
 SECRET_KEY = _read_secret(provided_secret_name, "secret_key")
 
+if "netbox_branching" in PLUGINS:
+    from netbox_branching.utilities import DynamicSchemaDict
+    DATABASES = DynamicSchemaDict(DATABASES)
+    DATABASE_ROUTERS = ['netbox_branching.database.BranchAwareRouter']
+ 
 # Post-process certain values
 CORS_ORIGIN_REGEX_WHITELIST = [re.compile(r) for r in CORS_ORIGIN_REGEX_WHITELIST]
 if "SENTINELS" in REDIS["tasks"]:
