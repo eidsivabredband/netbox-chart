@@ -25,7 +25,6 @@ spec:
     targetPort: granian-metrics
     protocol: TCP
     name: granian-metrics
-    nodePort: null
     {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePort)) }}
     nodePort: {{ .Values.service.nodePort }}
     {{- else if eq .Values.service.type "ClusterIP" }}
