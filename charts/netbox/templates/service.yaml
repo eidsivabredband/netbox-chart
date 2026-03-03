@@ -20,6 +20,18 @@ spec:
     {{- else if eq .Values.service.type "ClusterIP" }}
     nodePort: null
     {{- end }}
+  {{- if and .Values.metrics.granian.enabled .Values.metrics.granian.serviceMonitor.enabled }}
+  - port: {{ .Values.metrics.granian.serviceMonitor.port }}
+    targetPort: granian-metrics
+    protocol: TCP
+    name: granian-metrics
+    nodePort: null
+    {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePort)) }}
+    nodePort: {{ .Values.service.nodePort }}
+    {{- else if eq .Values.service.type "ClusterIP" }}
+    nodePort: null
+    {{- end }}
+  {{- end }}
   selector:
     {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: netbox
