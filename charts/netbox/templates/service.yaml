@@ -21,7 +21,7 @@ spec:
     nodePort: null
     {{- end }}
   {{- if and .Values.metrics.granian.enabled .Values.metrics.granian.serviceMonitor.enabled }}
-  - port: {{ .Values.metrics.granian.serviceMonitor.port }}
+  - port: 9000
     targetPort: granian-metrics
     protocol: TCP
     name: granian-metrics
