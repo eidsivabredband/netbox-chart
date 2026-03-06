@@ -22,7 +22,7 @@ spec:
     {{- end }}
   {{- if and .Values.metrics.granian.enabled .Values.metrics.granian.serviceMonitor.enabled }}
   - port: 9000
-    targetPort: granian-metrics
+    targetPort: 9000
     protocol: TCP
     name: granian-metrics
     {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePort)) }}
