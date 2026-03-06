@@ -84,7 +84,7 @@ spec:
         - name: GRANIAN_METRICS_ENABLED
           value: {{ .Values.metrics.granian.enabled | quote }}
         - name: GRANIAN_METRICS_PORT
-          value: 9000
+          value: "9000"
         - name: GRANIAN_METRICS_ADDRESS
           value: "0.0.0.0"
         {{- if .Values.dbWaitDebug }}
